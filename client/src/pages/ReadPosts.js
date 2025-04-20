@@ -9,7 +9,7 @@ const ReadPosts = (props) => {
     useEffect(() => {
         const fetchPost = async ()=>{
             const {data} = await supabase
-            .from('Posts')
+            .from('Crewmates')
             .select()
             .order('created_at', { ascending: true })
 
@@ -26,8 +26,8 @@ const ReadPosts = (props) => {
             {
                 posts && posts.length > 0 ?
                 posts.map((post,index) => 
-                   <Card id={post.id} title={post.title} author={post.author} description={post.description} bet={post.betCount}/>
-                ) : <h2>{'No Challenges Yet 😞'}</h2>
+                   <Card id={post.id} name={post.name} speed={post.speed} color={post.color} bet={post.betCount}/>
+                ) : <h2>{'No Crewmates Yet 😞'}</h2>
             }
         </div>  
     )

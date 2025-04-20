@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom'
 const App = () => {
   
   const descr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-
   const posts = [
       {'id':'1', 
       'title': 'Cartwheel in Chelsea 🤸🏽‍♀️',
@@ -52,9 +51,10 @@ const App = () => {
     <div className="App">
 
       <div className="header">
-        <h1>👍 Bet 1.0</h1>
-        <Link to="/"><button className="headerBtn"> Explore Challenges 🔍  </button></Link>
-        <Link to="/new"><button className="headerBtn"> Submit Challenge 🏆 </button></Link>
+        <img className="headerLogo" alt="logo" src={require('./amongus.webp')} />
+        <h1>Welcome to the Crewmate Creator!</h1>
+        <Link to="/"><button className="headerBtn"> Your crewmate gallery! 🔍  </button></Link>
+        <Link to="/new"><button className="headerBtn"> Create a Crewmate! </button></Link>
       </div>
         {element}
     </div>

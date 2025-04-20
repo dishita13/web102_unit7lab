@@ -7,7 +7,7 @@ import './EditPost.css'
 const EditPost = ({data}) => {
 
     const {id} = useParams();
-    const [post, setPost] = useState({id: null, title: "", author: "", description: ""});
+    const [post, setPost] = useState({id: null, name: "", speed: "", color: ""});
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -23,8 +23,8 @@ const EditPost = ({data}) => {
         event.preventDefault();
       
         await supabase
-          .from('Posts')
-          .update({ title: post.title, author: post.author,  description: post.description})
+          .from('Crewmates')
+          .update({ name: post.name, speed: post.speed,  color: post.color})
           .eq('id', id);
       
         window.location = "/";
@@ -34,7 +34,7 @@ const EditPost = ({data}) => {
         event.preventDefault();
       
         await supabase
-          .from('Posts')
+          .from('Crewmates')
           .delete()
           .eq('id', id); 
       
@@ -44,17 +44,28 @@ const EditPost = ({data}) => {
     return (
         <div>
             <form>
-                <label for="title">Title</label> <br />
-                <input type="text" id="title" name="title" value={post.title} onChange={handleChange} /><br />
+                <label for="name">name</label> <br />
+                <input type="text" id="name" name="name" value={post.name} onChange={handleChange} /><br />
                 <br/>
 
-                <label for="author">Author</label><br />
-                <input type="text" id="author" name="author" value={post.author} onChange={handleChange} /><br />
+                <label for="speed">speed</label><br />
+                <input type="text" id="speed" name="speed" value={post.speed} onChange={handleChange} /><br />
                 <br/>
 
-                <label for="description">Description</label><br />
-                <textarea rows="5" cols="50" id="description" name = "description" value={post.description} onChange={handleChange} >
-                </textarea>
+                <label for="color">color</label><br />
+                {["Red", "Blue", "Green", "Yellow"].map((clr) => (
+                    <label key={clr} style={{ display: "flex", alignItems: "center", marginBottom: "5px", gap: "8px" }}>
+                        <input
+                        type="radio" 
+                        name="color"
+                        value={clr}
+                        checked={post.color === clr}
+                        onChange={(e) => setPost((prev) => ({ ...prev, color: e.target.value }))}
+                        />
+                        <span>{clr}</span>
+                    </label>
+                    ))}
+                    
                 <br/>
                 <input type="submit" value="Submit" onClick={updatePost}/>
                 <button className="deleteButton" onClick={deletePost}>Delete</button>

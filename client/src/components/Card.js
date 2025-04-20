@@ -7,29 +7,21 @@ import { supabase } from '../client'
 
 const Card = (props) =>  {
 
-  const [count, setCount] = useState(0)
-  const updateCount = async (event) => {
-    event.preventDefault();
-
-    await supabase
-      .from('Posts')
-      .update({ betCount: count + 1})
-      .eq('id', props.id)
-      
-    setCount((count) => count + 1);
-  }
-
-  useEffect(()=>{
-    setCount(()=>props.bet)
-  },[props])
-
   return (
-      <div className="Card">
+      <div className="Card" style = {{backgroundColor: props.color}}>
           <Link to={'edit/'+ props.id}><img className="moreButton" alt="edit button" src={more} /></Link>
-          <h2 className="title">{props.title}</h2>
-          <h3 className="author">{"by " + props.author}</h3>
-          <p className="description">{props.description}</p>
-          <button className="betButton" onClick={updateCount} >👍 Bet Count: {count}</button>
+          <h2 className="name">{props.name}</h2>
+          <h3 className="speed">{props.speed + "mph"}</h3>
+          <p className="color" >
+          {Array.isArray(props.color) ? (
+              props.color.map((color, index) => (
+                <span key={index} className="color-badge">{color}</span>
+              ))
+            ) : (
+              <span className="color-badge">{props.color}</span>
+            )}
+
+          </p>
       </div>
   );
 };

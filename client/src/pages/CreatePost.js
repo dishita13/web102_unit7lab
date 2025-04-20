@@ -6,7 +6,7 @@ import { supabase } from '../client';
 
 
 const CreatePost = (event) => {
-    const [post, setPost] = useState({title: "", author: "", description: ""})
+    const [post, setPost] = useState({name: "", speed: "", color: []})
     const handleChange = (event) => {
         const {name, value} = event.target;
         setPost( (prev) => {
@@ -21,8 +21,8 @@ const CreatePost = (event) => {
         event.preventDefault();
     
         await supabase
-        .from('Posts')
-        .insert({title: post.title, author: post.author, description: post.description})
+        .from('Crewmates')
+        .insert({name: post.name, speed: post.speed, color: post.color})
         .select();
     
         window.location = "/";
@@ -31,17 +31,27 @@ const CreatePost = (event) => {
     return (
         <div>
             <form>
-                <label for="title">Title</label> <br />
-                <input type="text" id="title" name="title" onChange={handleChange} /><br />
+                <label for="name">name</label> <br />
+                <input type="text" id="name" name="name" onChange={handleChange} /><br />
                 <br/>
 
-                <label for="author">Author</label><br />
-                <input type="text" id="author" name="author" onChange={handleChange} /><br />
+                <label for="speed">speed</label><br />
+                <input type="text" id="speed" name="speed" onChange={handleChange} /><br />
                 <br/>
 
-                <label for="description">Description</label><br />
-                <textarea rows="5" cols="50" id="description" name = "description" onChange={handleChange}>
-                </textarea>
+                <label for="color">color</label><br />
+                {["Red", "Blue", "Green", "Yellow"].map((clr) => (
+                    <label key={clr} style={{ display: "flex", alignItems: "center", marginBottom: "5px", gap: "8px" }}>
+                        <input
+                        type="radio" // ← change to radio in step 2
+                        name="color"
+                        value={clr}
+                        checked={post.color === clr}
+                        onChange={(e) => setPost((prev) => ({ ...prev, color: e.target.value }))}
+                        />
+                        <span>{clr}</span>
+                    </label>
+                    ))}
                 <br/>
                 <input type="submit" value="Submit" onClick={createPost} />
             </form>
